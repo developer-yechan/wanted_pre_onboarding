@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const db = require("./database/models");
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ alter: true }).then(() => {
   console.log("db connection success");
 });
 
