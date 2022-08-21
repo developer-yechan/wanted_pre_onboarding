@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     "job_postings",
     {
       companyId: {
-        type: DataTypes.INTEGER(),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       position: {
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       compensation: {
-        type: DataTypes.INTEGER(),
+        type: DataTypes.INTEGER,
       },
       content: {
         type: DataTypes.STRING(255),
@@ -19,7 +19,9 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      timestamps: true,
+      timestamps: false,
+      charset: "utf8",
+      collate: "utf8_general_ci",
     }
   );
   return job_postings;

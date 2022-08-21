@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const db = require("./database/models");
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ alter: true }).then(() => {
   console.log("db connection success");
 });
 
@@ -19,7 +19,7 @@ app.get("/ping", (req, res) => {
 });
 
 const server = http.createServer(app);
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 10001;
 
 const start = async () => {
   try {

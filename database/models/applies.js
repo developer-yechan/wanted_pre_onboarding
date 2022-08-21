@@ -3,16 +3,18 @@ module.exports = (sequelize, DataTypes) => {
     "applies",
     {
       UserId: {
-        type: DataTypes.INTEGER(),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       jobPostingId: {
-        type: DataTypes.INTEGER(),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },
     {
-      timestamps: true,
+      timestamps: false,
+      charset: "utf8",
+      collate: "utf8_general_ci",
     }
   );
   return applies;
