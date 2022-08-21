@@ -3,11 +3,11 @@ module.exports = (sequelize, DataTypes) => {
     "required_skills",
     {
       skillId: {
-        type: DataTypes.INTEGER(),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       jobPostingId: {
-        type: DataTypes.INTEGER(),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },

@@ -13,19 +13,29 @@ db.skills = require("./skills")(sequelize, Sequelize);
 db.requiredSkills = require("./requiredSkills")(sequelize, Sequelize);
 db.applies = require("./applies")(sequelize, Sequelize);
 
-db.users.hasMany(db.applies);
+db.users.hasMany(db.applies, {
+  foreignKey: "UserId",
+});
 db.applies.belongsTo(db.users);
 
-db.jobPostings.hasMany(db.applies);
+db.jobPostings.hasMany(db.applies, {
+  foreignKey: "jobPostingId",
+});
 db.applies.belongsTo(db.jobPostings);
 
-db.companies.hasMany(db.jobPostings);
+db.companies.hasMany(db.jobPostings, {
+  foreignKey: "companyId",
+});
 db.jobPostings.belongsTo(db.companies);
 
-db.skills.hasMany(db.requiredSkills);
+db.skills.hasMany(db.requiredSkills, {
+  foreignKey: "skillId",
+});
 db.requiredSkills.belongsTo(db.skills);
 
-db.jobPostings.hasMany(db.requiredSkills);
+db.jobPostings.hasMany(db.requiredSkills, {
+  foreignKey: "jobPostingId",
+});
 db.requiredSkills.belongsTo(db.jobPostings);
 
 db.sequelize = sequelize;

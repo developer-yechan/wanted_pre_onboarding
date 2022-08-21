@@ -19,7 +19,7 @@ app.get("/ping", (req, res) => {
 });
 
 const server = http.createServer(app);
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 10001;
 
 const start = async () => {
   try {
