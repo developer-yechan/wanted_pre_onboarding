@@ -28,7 +28,7 @@ const postJob = async (req, res, next) => {
         position,
       },
     });
-    const postId = createdPost.dataValues.id;
+    const postId = createdPost.id;
     for (let i = 0; i < skills.length; i++) {
       await models.requiredSkills.create({
         skillId: skills[i],
@@ -54,7 +54,7 @@ const updateJobPost = async (req, res, next) => {
     if (!existingPost) {
       return res.status(400).json({ message: "이미 삭제된 공고입니다." });
     }
-    await models.jobPostings.update(
+    const updatedPost = await models.jobPostings.update(
       {
         companyId,
         position,
@@ -65,6 +65,10 @@ const updateJobPost = async (req, res, next) => {
         where: { id },
       }
     );
+    if (updatedPost[0] == 0) {
+      return res.status(400).json({ message: "내용이 변경되지 않았습니다." });
+    }
+    console.log(updatedPost, "update");
     return res.status(200).json({ message: "jobPosting is updated" });
   } catch (err) {
     console.error(err);
@@ -75,18 +79,13 @@ const updateJobPost = async (req, res, next) => {
 const deleteJobPost = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const existingPost = await models.jobPostings.findOne({
-      attributes: ["id"],
-      where: {
-        id,
-      },
-    });
-    if (!existingPost) {
-      return res.status(400).json({ message: "이미 삭제된 공고입니다." });
-    }
-    await models.jobPostings.destroy({
+    const deletedPost = await models.jobPostings.destroy({
       where: { id },
     });
+    if (!deletedPost) {
+      return res.status(400).json({ message: "이미 삭제된 공고입니다." });
+    }
+    console.log(deletedPost, "delete");
     return res.status(200).json({ message: "jobPosting is deleted" });
   } catch (err) {
     console.error(err);
@@ -101,6 +100,7 @@ const getJobPostAll = async (req, res, next) => {
         {
           model: models.companies,
           attributes: ["name", "country", "region"],
+          required: true,
         },
         {
           model: models.skills,
@@ -117,7 +117,7 @@ const getJobPostAll = async (req, res, next) => {
   }
 };
 
-const getJobPostDetail = async (req, res, next) => {
+const getJobPost = async (req, res, next) => {
   try {
     const { id } = req.params;
     const jobPostDetail = await models.jobPostings.findOne({
@@ -151,7 +151,9 @@ const getJobPostDetail = async (req, res, next) => {
         },
       },
     });
+
     jobPostDetail.dataValues.otherPosts = otherPosts;
+
     return res.status(200).json(jobPostDetail);
   } catch (err) {
     console.error(err);
@@ -164,5 +166,5 @@ module.exports = {
   postJob,
   updateJobPost,
   deleteJobPost,
-  getJobPostDetail,
+  getJobPost,
 };
