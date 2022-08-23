@@ -1,7 +1,5 @@
-const models = require("../database/models");
-const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
 const applyRepos = require("../repos/apply");
+
 const apply = async (req, res, next) => {
   try {
     const { UserId, jobPostingId } = req.body;
