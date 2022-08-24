@@ -16,7 +16,7 @@ const apply = async (req, res, next) => {
     return res.status(200).json({ message: "Apply is created" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "server error" });
+    res.status(500).json({ message: err.message });
   }
 };
 
